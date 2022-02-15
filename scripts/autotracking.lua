@@ -180,9 +180,26 @@ function updateYogurt(segment)
 
   local accessByte5 = segment:ReadUInt8(0x7E9C19)
 
-    toggleTeleport(accessByte5, 0x10, "troutyogurt")
+	toggleTeleport(accessByte5, 0x10, "troutyogurt")
 
 end
+
+function updateGum(segment)
+
+  local accessByte6 = segment:ReadUInt8(0x7EB616)
+
+    toggleTeleport(accessByte6, 0x01, "gum")
+
+end
+
+function updateEraser(segment)
+
+  local accessByte7 = segment:ReadUInt8(0x7E9C2D)
+
+    toggleTeleport(accessByte7, 0x04, "eraser")
+
+end
+
 ------------------------------------------------------
 -- SANCTUARY CHECKS
 ------------------------------------------------------
@@ -651,20 +668,24 @@ end
 --EVENT/LOCATION CHECKS
 ------------------------------------------------------
 
-function updateEvent(name, segment, address, flag)
+function updateEvent(name, segment, address, flag, keyItem)
 
   local trackerItem = Tracker:FindObjectForCode(name)
-  
+
   if trackerItem then
-  
-    local value = segment:ReadUInt8(address)
-    if (value & flag) ~= 0 then
-      trackerItem.AvailableChestCount = 0
-    else
-      trackerItem.AvailableChestCount = 1
-    end
+
+	local value = segment:ReadUInt8(address)
+	if (value & flag) ~= 0 then
+	  trackerItem.AvailableChestCount = 0
+	else
+	  trackerItem.AvailableChestCount = 1
+	end
+
+	if keyItem then
+		toggleItem(keyItem)
+	end
   else
-    printDebug("Update Event: Unable to find tracker item: " .. name)  
+	printDebug("Update Event: Unable to find tracker item: " .. name)
   end
 end
 
@@ -801,6 +822,8 @@ ScriptHost:AddMemoryWatch("BoatCheck", 0x7EB60C, 1, updateBoat)
 ScriptHost:AddMemoryWatch("CopCheck", 0x7E9C15, 1, updateCop)
 ScriptHost:AddMemoryWatch("CopBadgeCheck", 0x7EB600, 1, updateCopBadge)
 ScriptHost:AddMemoryWatch("YogurtCheck", 0x7E9C19, 1, updateYogurt)
+ScriptHost:AddMemoryWatch("GumCheck", 0x7EB616, 1, updateGum)
+ScriptHost:AddMemoryWatch("EraserCheck", 0x7E9C2D, 1, updateEraser)
 ScriptHost:AddMemoryWatch("NessItems", 0x7E99F1, 14, updateNessItems)
 ScriptHost:AddMemoryWatch("PaulaItems", 0x7E9A50, 14, updatePaulaItems)
 ScriptHost:AddMemoryWatch("JeffItems", 0x7E9AAF, 14, updateJeffItems)
