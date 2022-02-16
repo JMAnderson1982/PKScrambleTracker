@@ -184,6 +184,7 @@ function updateYogurt(segment)
 
 end
 
+-- Check to see if player has given gum to the monkey (south Winters checks)
 function updateGum(segment)
 
   local accessByte6 = segment:ReadUInt8(0x7EB616)
@@ -192,6 +193,7 @@ function updateGum(segment)
 
 end
 
+-- Check to see if player has used the eraser eraser (Stonehenge base)
 function updateEraser(segment)
 
   local accessByte7 = segment:ReadUInt8(0x7E9C2D)
@@ -200,6 +202,39 @@ function updateEraser(segment)
 
 end
 
+-- Check to see if player has used the Carrot Key
+function updateCarrot(segment)
+  local accessbyte = segment:ReadUInt8(0x7E9C59)
+	toggleTeleport(accessbyte, 0x08, "carrotkey")
+end
+
+-- Check to see if the shack key has been used
+function updateShackKey(segment)
+  local accessbyte = segment:ReadUInt8(0x7E9C15)
+    toggleTeleport(accessbyte, 0x08, "shackkey")
+end
+
+-- Bills turned in
+function updateBills(segment)
+  local accessbyte = segment:ReadUInt8(0x7E9C16)
+    toggleTeleport(accessbyte, 0x40, "bills")
+end
+
+-- Banana turned in
+function updateBanana(segment)
+  local accessbyte = segment:ReadUInt8(0x7E9C0F)
+    toggleTeleport(accessbyte, 0x02, "banana")
+end
+
+function updateDiamond(segment)
+  local accessbyte = segment:ReadUInt8(0x7EB60A)
+	toggleTeleport(accessbyte, 0x10, "diamond")
+end
+
+function updateInvitation(segment)
+	local accessbyte = segment:ReadUInt8(0x7EB60B)
+	  toggleTeleport(accessbyte, 0x01, "talahramah")
+  end
 ------------------------------------------------------
 -- SANCTUARY CHECKS
 ------------------------------------------------------
@@ -809,6 +844,8 @@ end
 -- Tenda Chief 9C1B 0x04
 -- Magicant Nightmare 0x7E9C11, 0x02
 
+-- PRV Pencil statue 0x7E9C2B, 0x08
+-- Monkey Cave Pencil Status -x7E9C48, 0x08
 
 --------------------------------------
 --MEMORY WATCHES
@@ -824,6 +861,12 @@ ScriptHost:AddMemoryWatch("CopBadgeCheck", 0x7EB600, 1, updateCopBadge)
 ScriptHost:AddMemoryWatch("YogurtCheck", 0x7E9C19, 1, updateYogurt)
 ScriptHost:AddMemoryWatch("GumCheck", 0x7EB616, 1, updateGum)
 ScriptHost:AddMemoryWatch("EraserCheck", 0x7E9C2D, 1, updateEraser)
+ScriptHost:AddMemoryWatch("CarrotCheck", 0x7E9C59, 1, updateCarrot)
+ScriptHost:AddMemoryWatch("ShackKeyCheck", 0x7E9C15, 1, updateShackKey)
+ScriptHost:AddMemoryWatch("WadOfBillsCheck", 0x7E9C16, 1, updateBills)
+ScriptHost:AddMemoryWatch("BananaCheck", 0x7E9C0F,1, updateBanana)
+ScriptHost:AddMemoryWatch("DiamondCheck", 0x7EB60A, 1, updateDiamond)
+ScriptHost:AddMemoryWatch("InvitationCheck", 0x7EB60B, 1, updateInvitation)
 ScriptHost:AddMemoryWatch("NessItems", 0x7E99F1, 14, updateNessItems)
 ScriptHost:AddMemoryWatch("PaulaItems", 0x7E9A50, 14, updatePaulaItems)
 ScriptHost:AddMemoryWatch("JeffItems", 0x7E9AAF, 14, updateJeffItems)
