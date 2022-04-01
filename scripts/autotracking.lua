@@ -220,6 +220,17 @@ function updateBills(segment)
     toggleTeleport(accessbyte, 0x40, "bills")
 end
 
+function updateZombiePaper(segment)
+	local accessbyte = segment:ReadUInt8(0x7E9C17)
+	  toggleTeleport(accessbyte, 0x08, "zombiepaper")
+	  toggleTeleport(accessbyte, 0x10, "zombiepaper")
+  end
+
+function updateFlyHoney(segment)
+	local accessbyte = segment:ReadUInt8(0x7E9C36)
+	  toggleTeleport(accessbyte, 0x01, "flyhoney")
+  end
+
 -- Banana turned in
 function updateBanana(segment)
   local accessbyte = segment:ReadUInt8(0x7E9C0F)
@@ -232,9 +243,45 @@ function updateDiamond(segment)
 end
 
 function updateInvitation(segment)
-	local accessbyte = segment:ReadUInt8(0x7EB60B)
-	  toggleTeleport(accessbyte, 0x01, "talahramah")
+  local accessbyte = segment:ReadUInt8(0x7EB60B)
+    toggleTeleport(accessbyte, 0x01, "talahramah")
+end
+
+function updateTinyRuby(segment)
+	local accessbyte = segment:ReadUInt8(0x7E9C33)
+	  toggleTeleport(accessbyte, 0x02, "tinyruby")
   end
+
+function updateHeiroglyph(segment)
+	local accessbyte = segment:ReadUInt8(0x7EB60D)
+	  toggleTeleport(accessbyte, 0x80, "heiroglyph")
+  end
+
+  function updateHawkeye(segment)
+	local accessbyte = segment:ReadUInt8(0x7E9C2B)
+	  toggleTeleport(accessbyte, 0x80, "hawkeye")
+  end
+
+
+
+function updateTendakraut(segment)
+  local accessbyte = segment:ReadUInt8(0x7E9C08)
+    toggleTeleport(accessbyte, 0x02, "tendakraut")
+end
+
+function updateShynessBook(segment)
+	local accessbyte = segment:ReadUInt8(0x7E9C1B)
+	  toggleTeleport(accessbyte, 0x04, "shynessbook")
+  end
+
+
+
+function updateMeteorite(segment)
+	local accessbyte = segment:ReadUInt8(0x7EB608)
+	  toggleTeleport(accessbyte, 0x02, "meteorite")
+  end
+
+
 ------------------------------------------------------
 -- SANCTUARY CHECKS
 ------------------------------------------------------
@@ -845,7 +892,8 @@ end
 -- Magicant Nightmare 0x7E9C11, 0x02
 
 -- PRV Pencil statue 0x7E9C2B, 0x08
--- Monkey Cave Pencil Status -x7E9C48, 0x08
+-- Monkey Cave Pencil Statue 0x7E9C48, 0x08
+-- Winters Pencil Statue 0x7E9C54, 0x01
 
 --------------------------------------
 --MEMORY WATCHES
@@ -864,9 +912,17 @@ ScriptHost:AddMemoryWatch("EraserCheck", 0x7E9C2D, 1, updateEraser)
 ScriptHost:AddMemoryWatch("CarrotCheck", 0x7E9C59, 1, updateCarrot)
 ScriptHost:AddMemoryWatch("ShackKeyCheck", 0x7E9C15, 1, updateShackKey)
 ScriptHost:AddMemoryWatch("WadOfBillsCheck", 0x7E9C16, 1, updateBills)
+ScriptHost:AddMemoryWatch("ZombiePaperCheck", 0x7E9C17, 1, updateZombiePaper)
+ScriptHost:AddMemoryWatch("FlyHoneyCheck", 0x7E9C36, 1, updateFlyHoney)
 ScriptHost:AddMemoryWatch("BananaCheck", 0x7E9C0F,1, updateBanana)
 ScriptHost:AddMemoryWatch("DiamondCheck", 0x7EB60A, 1, updateDiamond)
 ScriptHost:AddMemoryWatch("InvitationCheck", 0x7EB60B, 1, updateInvitation)
+ScriptHost:AddMemoryWatch("Ruby", 0x7E9C33, 1, updateTinyRuby)
+ScriptHost:AddMemoryWatch("HeiroglyphCheck", 0x7EB60D, 1, updateHeiroglyph)
+ScriptHost:AddMemoryWatch("HawkeyeCheckCheck", 0x7E9C2B, 1, updateHawkeye)
+ScriptHost:AddMemoryWatch("ShynessBookCheck", 0x7E9C1B, 1, updateShynessBook)
+ScriptHost:AddMemoryWatch("TalkingRockCheck", 0x7E9C08, 1, updateTendakraut)
+ScriptHost:AddMemoryWatch("MeteoriteCheck", 0x7EB608, 1, updateMeteorite)
 ScriptHost:AddMemoryWatch("NessItems", 0x7E99F1, 14, updateNessItems)
 ScriptHost:AddMemoryWatch("PaulaItems", 0x7E9A50, 14, updatePaulaItems)
 ScriptHost:AddMemoryWatch("JeffItems", 0x7E9AAF, 14, updateJeffItems)
